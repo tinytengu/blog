@@ -3,7 +3,8 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 
 const props = Astro.props.frontmatter || Astro.props;
 
-const urlParts = Astro.url.pathname.split("/");
+const urlParts = Astro.url.pathname.replace(/\/$/g, "").split("/");
+
 const urlCommon = urlParts.slice(0, urlParts.length - 1).join("/");
 const language = urlParts[urlParts.length - 1];
 

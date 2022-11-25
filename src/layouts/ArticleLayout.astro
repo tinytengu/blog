@@ -6,12 +6,24 @@ import i18next, { t } from "i18next";
 import BaseLayout from "@layouts/BaseLayout.astro";
 
 // Utils
-import { parseArticleURL } from "src/utils";
+import { parseArticleURL, groupBy } from "src/utils";
+import type { Article } from "src/types";
 
 const props = Astro.props.frontmatter || Astro.props;
 
 const { slug: articleSlug, language: articleLanguage } = parseArticleURL(
   Astro.url.pathname
+);
+
+// Current article files
+const articleFiles = groupBy(
+  await Astro.glob<Article>("/src/pages/**/*.mdx"),
+  (item) => parseArticleURL(item.url!).slug!
+)[articleSlug!];
+
+// Current article available languages
+const articleLanguages = articleFiles.map(
+  (article) => parseArticleURL(article.url!).language!
 );
 ---
 
@@ -30,7 +42,7 @@ const { slug: articleSlug, language: articleLanguage } = parseArticleURL(
     <div class="flex justify-between items-center">
       <ul class="flex gap-4 list-none px-0">
         {
-          props.languages.map((lang: string) => (
+          articleLanguages.map((lang: string) => (
             <li class="px-0">
               <a
                 href={`${lang}`}

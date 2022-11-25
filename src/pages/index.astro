@@ -1,10 +1,23 @@
 ---
+// Components
 import HomeLayout from "@layouts/HomeLayout.astro";
-
 import Article from "@components/Article.astro";
-import type { Article as ArticleType } from "../types";
 
-const articles = await Astro.glob<ArticleType>("./**/en.mdx");
+// Utils
+import type { Article as ArticleType } from "src/types";
+import { parseArticleURL, groupBy } from "src/utils";
+import type { MDXInstance } from "astro";
+
+const articlesFiles = groupBy(
+  await Astro.glob<ArticleType>("/src/pages/**/*.mdx"),
+  (item) => parseArticleURL(item.url!).slug!
+);
+
+const articles: MDXInstance<ArticleType>[] = [];
+
+for (const key in articlesFiles) {
+  articles.push(articlesFiles[key][0]);
+}
 ---
 
 <HomeLayout>

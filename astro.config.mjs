@@ -13,8 +13,8 @@ import vercel from "@astrojs/vercel/serverless";
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), mdx(), astroI18next()],
-  site: "https://tinytengu.github.io",
-  base: "/blog",
+  site: "https://tinyblog-tinytengu.vercel.app",
+  base: "/",
   output: "server",
-  adapter: vercel()
+  adapter: vercel(),
 });

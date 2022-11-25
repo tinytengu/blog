@@ -1,0 +1,27 @@
+---
+import HomeLayout from "@layouts/HomeLayout.astro";
+
+import Article from "@components/Article.astro";
+import type { Article as ArticleType } from "../types";
+
+const articles = await Astro.glob<ArticleType>("./**/en.mdx");
+---
+
+<HomeLayout>
+  <ul class="flex flex-col gap-1 lg:gap-5 items-center">
+    {
+      articles.map((article) => (
+        <li>
+          <Article
+            slug={article.url!}
+            title={article.frontmatter.title}
+            caption={article.frontmatter.caption}
+            date={article.frontmatter.date}
+            duration={article.frontmatter.duration}
+            tags={article.frontmatter.tags}
+          />
+        </li>
+      ))
+    }
+  </ul>
+</HomeLayout>

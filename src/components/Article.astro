@@ -1,0 +1,18 @@
+---
+const { slug, title, caption, date, duration, tags } = Astro.props;
+---
+
+<style lang="scss"></style>
+
+<a
+  href={`https://tinytengu.github.io/blog${slug}`}
+  class="w-full lg:w-[960px] p-6 flex flex-col gap-2 lg:gap-5 text-white bg-blue-500"
+>
+  <p class="md:w-1/2 opacity-50 text-sm md:text-base">{date}</p>
+  <h2 class="md:w-2/3 font-bold text-3xl md:text-5xl">{title}</h2>
+  <p class="md:w-1/2 opacity-80 text-base md:text-xl">{caption}</p>
+  <div class="flex justify-between opacity-50 text-sm md:text-base">
+    <p>{duration} min. to read</p>
+    <p>{tags.join(" / ")}</p>
+  </div>
+</a>

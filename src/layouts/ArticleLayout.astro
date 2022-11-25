@@ -1,0 +1,45 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const props = Astro.props.frontmatter || Astro.props;
+
+const urlParts = Astro.url.pathname.split("/");
+const urlCommon = urlParts.slice(0, urlParts.length - 1).join("/");
+const language = urlParts[urlParts.length - 1];
+
+const LANGUAGES: { [key: string]: string } = {
+  en: "English",
+  ru: "Русский",
+  es: "Español",
+};
+---
+
+<BaseLayout>
+  <article
+    class="prose max-w-none prose-h1:text-5xl w-full lg:w-[960px] px-2 lg:px-0 pb-4 ml-auto mr-auto"
+  >
+    <!-- Date & Tags header -->
+    <header class="flex justify-between opacity-50">
+      <p>{props.date}</p>
+      <p>{props.tags.join(" / ")}</p>
+    </header>
+    <!-- Title -->
+    <h1>{props.title}</h1>
+    <!-- Languages list -->
+    <ul class="flex gap-4 list-none px-0">
+      {
+        props.languages.map((lang: string) => (
+          <li class="px-0">
+            <a
+              href={`${urlCommon}/${lang}`}
+              class={language == lang ? "opacity-100" : "opacity-50"}
+            >
+              {LANGUAGES[lang]}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <slot />
+  </article>
+</BaseLayout>

@@ -10,7 +10,9 @@ import { parseArticleURL } from "src/utils";
 
 const { language } = parseArticleURL(Astro.url.pathname);
 
-i18next.changeLanguage(language);
+if (language) {
+  i18next.changeLanguage(language);
+}
 ---
 
 <html lang={i18next.language}>

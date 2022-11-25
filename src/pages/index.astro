@@ -1,22 +1,19 @@
 ---
+import { changeLanguage } from "i18next";
 // Components
 import HomeLayout from "@layouts/HomeLayout.astro";
 import Article from "@components/Article.astro";
-
 // Utils
 import type { Article as ArticleType } from "src/types";
 import { parseArticleURL, groupBy } from "src/utils";
 import type { MDXInstance } from "astro";
 
-const articlesFiles = groupBy(
-  await Astro.glob<ArticleType>("/src/pages/**/*.mdx"),
-  (item) => parseArticleURL(item.url!).slug!
-);
+changeLanguage("en");
 
+const articlesFiles = groupBy(await Astro.glob<ArticleType>("/src/pages/**/*.mdx"), (item) => parseArticleURL(item.url!).slug!);
 const articles: MDXInstance<ArticleType>[] = [];
-
 for (const key in articlesFiles) {
-  articles.push(articlesFiles[key][0]);
+    articles.push(articlesFiles[key][0]);
 }
 ---
 

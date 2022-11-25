@@ -17,7 +17,7 @@ const { slug: articleSlug, language: articleLanguage } = parseArticleURL(
 
 // Current article files
 const articleFiles = groupBy(
-  await Astro.glob<Article>("/src/pages/**/*.mdx"),
+  await Astro.glob<Article>("../pages/**/*.mdx"),
   (item) => parseArticleURL(item.url!).slug!
 )[articleSlug!];
 
@@ -25,6 +25,8 @@ const articleFiles = groupBy(
 const articleLanguages = articleFiles.map(
   (article) => parseArticleURL(article.url!).language!
 );
+
+// const articleLanguages = ["en", "es", "ru"];
 ---
 
 <BaseLayout>

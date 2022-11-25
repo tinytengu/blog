@@ -1,0 +1,39 @@
+---
+import { changeLanguage } from "i18next";
+// Components
+import HomeLayout from "@layouts/HomeLayout.astro";
+import Article from "@components/Article.astro";
+// Utils
+import type { Article as ArticleType } from "src/types";
+import { parseArticleURL, groupBy } from "src/utils";
+import type { MDXInstance } from "astro";
+
+changeLanguage("en");
+
+const articlesFiles = groupBy(await Astro.glob<ArticleType>("/src/pages/**/*.mdx"), (item) => parseArticleURL(item.url!).slug!);
+const articles: MDXInstance<ArticleType>[] = [];
+for (const key in articlesFiles) {
+    articles.push(articlesFiles[key][0]);
+}
+---
+
+<HomeLayout>
+  <ul class="flex flex-col gap-1 lg:gap-5 items-center">
+    {
+      articles.map((article) => (
+        <>
+          <li>
+            <Article
+              slug={article.url!.replace(import.meta.env.BASE_URL, "")}
+              title={article.frontmatter.title}
+              caption={article.frontmatter.caption}
+              date={article.frontmatter.date}
+              duration={article.frontmatter.duration}
+              tags={article.frontmatter.tags}
+            />
+          </li>
+        </>
+      ))
+    }
+  </ul>
+</HomeLayout>

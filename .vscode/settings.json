@@ -1,5 +1,8 @@
 {
   "files.associations": {
     "*.mdx": "markdown"
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///c%3A/Users/Daniel/Desktop/blog/.github/workflows/deploy.yml"
   }
 }

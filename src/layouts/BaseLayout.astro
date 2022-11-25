@@ -1,8 +1,19 @@
 ---
+// Thirdparty
+import i18next from "i18next";
+
+// Components
 import Navbar from "@components/Navbar.astro";
+
+// Utils
+import { parseArticleURL } from "src/utils";
+
+const { language } = parseArticleURL(Astro.url.pathname);
+
+i18next.changeLanguage(language);
 ---
 
-<html lang="en">
+<html lang={i18next.language}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
